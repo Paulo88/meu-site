@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneTicket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjufEh0cMbC_9YKYJap27217yqQ-YdnhMvNw&s"
+            type="image/png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Montserrat', sans-serif;
+        }
+
+        /* Em cartaz Background*/
+        body {
+            background-color: #312e2e;
+            color: #ffffff;
+        }
+
+        /* Header */
+        header {
+            background-color: #000000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            width: 150px;
+        }
+
+        .logo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #d1d4cc;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        /* Inicio */
+        .nav-link:hover,
+        .nav-link.active {
+            color: #e71b0c;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Menu - Filmes...Noticias */
+        .search-icon,
+        .location-icon {
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #e71b0c;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .user-icon {
+            margin-right: 6px;
+        }
+
+        /* Hero Section with Slider */
+        .hero-slider {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .slider-item {
+            position: relative;
+            height: 600px;
+            background-image: url('img/background-sobre.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 30%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        /* content */
+        .slider-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .movie-info {
+            max-width: 50%;
+        }
+
+        .label {
+            display: inline-block;
+            background-color: #e71b0c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .movie-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .movie-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .movie-rating,
+        .movie-year,
+        .movie-duration {
+            margin-right: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .meta-icon {
+            margin-right: 5px;
+        }
+
+        .movie-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .movie-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-tickets {
+            padding: 12px 25px;
+            background-color: #e71b0c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-trailer {
+            padding: 12px 25px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            display: flex;
+            align-items: center;
+        }
+
+        .play-icon {
+            margin-right: 8px;
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slide-dot.active {
+            background-color: #e71b0c;
+        }
+
+        /* Now Playing Section */
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #e71b0c;
+        }
+
+        .view-all {
+            color: #e71b0c;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow-icon {
+            margin-left: 5px;
+        }
+
+        .now-playing {
+            padding: 60px 0;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .movie-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .movie-poster {
+            height: 300px;
+            background-color: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-details {
+            padding: 15px;
+        }
+
+        .movie-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #222;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-card-info {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .movie-card-rating {
+            display: flex;
+            align-items: center;
+            color: #f9c828;
+        }
+
+        .star-icon {
+            margin-right: 3px;
+        }
+
+        .buy-ticket-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #e71b0c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+         padding: 60px 0;
+            background-color: #222831;
+        }
+
+        .coming-soon-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        }
+
+        .coming-movie-card {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        aspect-ratio: 2 / 3; /* substitui o height fixo */
+        display: flex;
+        flex-direction: column;
+        }
+
+        .coming-movie-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        }
+
+        .coming-movie-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+        color: white;
+        }
+
+        .coming-movie-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        }
+
+        .coming-movie-date {
+        font-size: 14px;
+        opacity: 0.8;
+        }
+
+        .release-label {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: #e71b0c;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: 600;
+        }
+
+        /* Cinemas Section */
+        .cinemas-section {
+            padding: 60px 0;
+            background-color: #16212e;
+        }
+
+        .cinemas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .cinema-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cinema-image {
+            height: 180px;
+            background-color: #eee;
+            position: relative;
+        }
+
+        .cinema-details {
+            padding: 20px;
+        }
+
+        .cinema-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .cinema-location {
+            display: flex;
+            align-items: flex-start;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .location-icon-small {
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+
+        .cinema-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .cinema-feature {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .view-sessions {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #e71b0c;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Promo Section */
+        .promo-section {
+            padding: 60px 0;
+            background-color: #1d2b3d;
+            color: white;
+        }
+
+        .promo-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .promo-image {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .promo-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .promo-text {
+            flex: 1;
+        }
+
+        .promo-subtitle {
+            color: #e71b0c;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .promo-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .promo-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .promo-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #e71b0c;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* App Download Section */
+        .app-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-background {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Ajuste opcional para sobrepor texto na imagem */
+        .app-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 60px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* Joga o conteúdo pra esquerda */
+            padding-left: 100px;
+            /* Vá mudando esse valor: 50px, 200px, etc */
+        }
+
+        .app-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 70%;
+            /* vá testando: 60%, 80%, 50%, etc. */
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                justify-content: flex-start !important;
+                padding: 5px !important;
+            }
+
+            .app-text {
+                align-items: flex-start !important;
+                text-align: center !important;
+                max-width: 100% !important;
+            }
+
+            .app-features {
+                margin-bottom: 0px !important;
+                /* aproxima os botões do texto */
+            }
+
+            .app-download-buttons {
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                /* impede quebra */
+                gap: 8px !important;
+                /* distancia os botões */
+                align-items: center !important;
+            }
+
+            .app-store-button,
+            .play-store-button {
+                width: auto !important;
+                padding: 6px 5px !important;
+                /* menor padding */
+                font-size: 1px !important;
+            }
+
+            .store-logo {
+                width: 20px !important;
+                /* reduz o ícone */
+                margin-right: 6px !important;
+            }
+
+            .app-title {
+                font-size: 20px !important;
+            }
+
+            .feature-text {
+                font-size: 8.5px !important;
+            }
+
+            .button-small-text {
+                font-size: 9px !important;
+            }
+
+            .button-large-text {
+                font-size: 9px !important;
+            }
+        }
+
+        .app-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ebebeb;
+        }
+
+        .app-features {
+            /* distancia entre "Receba notificações de lançamentos" e os botões */
+            margin-bottom: 30px;
+        }
+
+        .app-feature-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .feature-check {
+            margin-right: 15px;
+            color: #1de20b;
+            font-weight: bold;
+        }
+
+        .feature-text {
+            font-size: 16px;
+            color: #ebebeb;
+        }
+
+        .app-download-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .app-store-button,
+        .play-store-button {
+            display: flex;
+            align-items: center;
+            background-color: #222;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .store-logo {
+            width: 30px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .app-button-text {
+            line-height: 1.3;
+        }
+
+        .button-small-text {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .button-large-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Cliente */
+        .cliente-section {
+            padding: 60px 0;
+            background: #121a25;
+        }
+
+        .cliente-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .cliente-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cliente-image {
+            height: 180px;
+            background-color: #eee;
+            position: relative;
+        }
+
+        .cliente-details {
+            padding: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: #aaa;
+            padding-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #e71b0c;
+        }
+
+        .footer-description {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon-footer {
+            width: 36px;
+            height: 36px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon-footer:hover {
+            background-color: #e71b0c;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .contact-item {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            color: #e71b0c;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #221f1f;
+            font-size: 13px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .slider-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .movie-info {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .promo-content,
+            .app-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 10px 0;
+            }
+
+            .hero-slider {
+                height: 500px;
+            }
+
+            .slider-item {
+                height: 500px;
+            }
+
+            .movie-title {
+                font-size: 32px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-button {
+                border-radius: 4px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .movie-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-tickets,
+            .btn-trailer {
+                width: 100%;
+                text-align: center;
+            }
+
+            .movie-meta {
+                flex-wrap: wrap;
+            }
+
+            .hero-slider,
+            .slider-item {
+                height: 600px;
+            }
+
+            .app-download-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Botões de acessibilidade */
+        .accessibility-bar {
+            position: fixed;
+            left: 10px;
+            top: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .accessibility-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 18px;
+            width: 45px;
+            height: 45px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+        }
+
+        .accessibility-button:hover {
+            background-color: #0056b3;
+            cursor: pointer;
+        }
+
+        /* Chatbot*/
+        .chatbot-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Botão Chat*/
+        .chatbot-button {
+            background-color: #069cca;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Pop-up */
+        .chatbot-popup {
+            background-color: #fff;
+            width: 260px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        /* Cabeçalho */
+        .chatbot-header {
+            background-color: #069cca;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Corpo da mensagem */
+        .chatbot-body {
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Mostrar balão ao passar o mouse */
+        .chatbot-wrapper:hover .chatbot-popup {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="main-header">
+                <div class="logo">
+                    <img src="img/Logos/one-ticket.svg" alt="Logo OneTicket" class="logo-image">
+                </div>
+                <div class="mobile-menu-toggle">≡</div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active">Início</a></li>
+                    <li><a href="#" class="nav-link">Filmes</a></li>
+                    <li><a href="#" class="nav-link">Cinemas</a></li>
+                    <li><a href="#" class="nav-link">Promoções</a></li>
+                    <li><a href="#" class="nav-link">Notícias</a></li>
+                </ul>
+                <div class="user-actions">
+                    <div class="search-icon">🔍</div>
+                    <div class="location-icon">📍</div>
+                    <a href="#" class="login-btn"><span class="user-icon">👤</span> Meus ingressos</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-slider">
+        <div class="slider-item">
+            <div class="overlay"></div>
+            <div class="slider-content">
+                <div class="movie-info">
+                    <span class="label">EM CARTAZ</span>
+                    <h1 class="movie-title">Duna: Parte Dois</h1>
+                    <div class="movie-meta">
+                        <div class="movie-rating"><span class="meta-icon">⭐</span> 8.7/10</div>
+                        <div class="movie-year"><span class="meta-icon">📅</span> 2025</div>
+                        <div class="movie-duration"><span class="meta-icon">⏱️</span> 166 min</div>
+                    </div>
+                    <p class="movie-description">Paul Atreides se une a Chani e aos Fremen enquanto busca vingança
+                        contra os conspiradores que destruíram sua família. Enfrentando uma escolha entre o amor de sua
+                        vida e o destino do universo, ele deve impedir um futuro terrível que só ele pode prever.</p>
+                    <div class="movie-actions">
+                        <a href="#" class="btn-tickets">Comprar Ingressos</a>
+                        <a href="#" class="btn-trailer"><span class="play-icon">▶</span> Assistir Trailer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <div class="slide-dot active"></div>
+            <div class="slide-dot"></div>
+            <div class="slide-dot"></div>
+            <div class="slide-dot"></div>
+        </div>
+    </section>
+     
+    <!-- Em cartaz -->
+    <section class="now-playing">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="section-title">Em Cartaz</h2>
+                <a href="#" class="view-all">Ver Todos <span class="arrow-icon">→</span></a>
+            </div>
+            <div class="movies-grid">
+                <!-- Filme 1 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/01 em cartaz.jpg" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Duna: Parte Dois</h3>
+                        <div class="movie-card-info">
+                            <span>Ficção Científica</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 8.7</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 2 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/02 em cartaz.jpg" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Deadpool & Wolverine</h3>
+                        <div class="movie-card-info">
+                            <span>Ação</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 8.2</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 3 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/03 em cartaz.webp" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Coringa: Delírio a Dois</h3>
+                        <div class="movie-card-info">
+                            <span>Drama/Crime</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 7.9</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 4 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/04 em cartaz.webp" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Alien: Romulus</h3>
+                        <div class="movie-card-info">
+                            <span>Terror/Sci-Fi</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 7.5</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 5 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/05 em cartaz.jpeg" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Gladiador II</h3>
+                        <div class="movie-card-info">
+                            <span>Ação/Drama</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 8.4</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 6 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/06 em cartaz.jpeg" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Divertida Mente 2</h3>
+                        <div class="movie-card-info">
+                            <span>Animação</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 8.6</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 7 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/07 em cartaz.webp" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Borderlands</h3>
+                        <div class="movie-card-info">
+                            <span>Comédia/Ação</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 4.7</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 8 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/08 em cartaz.webp" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Um lugar silencioso: DIA UM</h3>
+                        <div class="movie-card-info">
+                            <span> Terror/Ficção científica</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 7.5</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 9 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/09 em cartaz.jpg" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Missão Impossivel: Acerto de contas</h3>
+                        <div class="movie-card-info">
+                            <span> Ação/Thriller</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 7.6</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+
+                <!-- Filme 10 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="img/Em cartaz/10 em cartaz.png" alt="Movie Poster" class="poster-image">
+                    </div>
+                    <div class="movie-details">
+                        <h3 class="movie-card-title">Wicked</h3>
+                        <div class="movie-card-info">
+                            <span>Musical/Fantasia</span>
+                            <div class="movie-card-rating"><span class="star-icon">⭐</span> 7.4</div>
+                        </div>
+                        <button class="buy-ticket-btn">Comprar Ingressos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promoção -->
+    <section class="promo-section">
+        <div class="container">
+            <div class="promo-content">
+                <div class="promo-image">
+                    <img src="img/Promoção/promocao.jpeg" alt="Promoção" class="promo-img">
+                </div>
+                <div class="promo-text">
+                    <div class="promo-subtitle">Promoção Especial</div>
+                    <h2 class="promo-title">I LOVE SEGUNDA 😍😍😍</h2>
+                    <p class="promo-description">Na segunda-feira, todo mundo paga menos que meia entrada em todas as
+                        salas do Cine Gracher Brusque.</p>
+                    <a href="#" class="promo-button">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Em Breve -->
+    <section class="coming-soon">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="section-title">Em Breve 🤩</h2>
+                <a href="#" class="view-all">Ver Todos <span class="arrow-icon">→</span></a>
+            </div>
+            <div class="coming-soon-grid">
+
+                <!-- Em Breve 1 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/01 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Lilo & Stitch</h3>
+                        <p class="coming-movie-date">Lançamento: 21 de Maio de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 2 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/02 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Elio</h3>
+                        <p class="coming-movie-date">Lançamento: 25 de Maio de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 3 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/03 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Como Treinar Seu Dragão</h3>
+                        <p class="coming-movie-date">Lançamento: 11 de Junho de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 4 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/04 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Superman</h3>
+                        <p class="coming-movie-date">Lançamento: 07 de Julho de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 5 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/05 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Smurfs</h3>
+                        <p class="coming-movie-date">Lançamento: 10 de Julho de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 6 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/06 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Quarteto Fantastico</h3>
+                        <p class="coming-movie-date">Lançamento: 23 de Julho de 2025</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 7 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/07 em breve.webp" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Vingadores: Doomsday</h3>
+                        <p class="coming-movie-date">Lançamento: 1 de Maio de 2026</p>
+                    </div>
+                </div>
+
+                <!-- Em Breve 8 -->
+                <div class="coming-movie-card">
+                    <img src="img/Em breve/08 em breve.jpg" alt="Coming Soon Movie" class="coming-movie-image">
+                    <span class="release-label">Em Breve</span>
+                    <div class="coming-movie-overlay">
+                        <h3 class="coming-movie-title">Vingadores: Guerras Secretas</h3>
+                        <p class="coming-movie-date">Lançamento: 1 de Maio de 2028</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinemas -->
+    <section class="cinemas-section">
+        <div class="container">
+            <h2 class="section-title">Nossos cinemas 📽️</h2>
+            <div class="cinemas-grid">
+                <!-- Cinema 1 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/01 cinema.png" alt="Cinema"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Brusque - Cine Shopping Gracher</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Av. Cônsul Carlos Renaux, 56 - Centro 1
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+
+                <!-- Cinema 2 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/02 cinema.png" alt="Cinema" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Brusque - Cine Gracher Havan</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Havan - Rod. Antônio Heil, 200 - Centro 2
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+
+                <!-- Cinema 3 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/03 cinema.webp" alt="Cinema"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Porto Belo - Cine Gracher Havan</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Av. Gov. Celso Ramos, s/n - Perequê
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+
+                <!-- Cinema 4 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/04 cinema.webp" alt="Cinema"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Rodovia Br 470, N° 1799, - Encano do Norte
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+
+                <!-- Cinema 5 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/05 cinema.webp" alt="Cinema" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Joaçaba - Cine Gracher Havan</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Loja HAVAN - Joaçaba, SC, 89600-000
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+
+                <!-- Cinema 6 -->
+                <div class="cinema-card">
+                    <div class="cinema-image">
+                        <img src="img/Cinema/06 cinema.webp" alt="Cinema"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cinema-details">
+                        <h3 class="cinema-name">Porto União - Cine Gracher Havan</h3>
+                        <div class="cinema-location">
+                            <span class="location-icon-small">📍</span>
+                            Av. dos Ferroviários, 1045 - São Pedro
+                        </div>
+                        <div class="cinema-features">
+                            <span class="cinema-feature">3D</span>
+                            <span class="cinema-feature">Poltronas VIP</span>
+                            <span class="cinema-feature">Snacks Gourmet</span>
+                        </div>
+                        <a href="#" class="view-sessions">Ver Sessões</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App -->
+    <section class="app-section">
+        <img src="img/App/app.jpg" alt="Fundo App" class="app-background">
+        <div class="app-container">
+            <div class="app-text">
+                <h2 class="app-title">Baixe nosso App</h2>
+                <div class="app-features">
+                    <div class="app-feature-item">
+                        <span class="feature-check">✔</span>
+                        <span class="feature-text">Compre ingressos com facilidade</span>
+                    </div>
+                    <div class="app-feature-item">
+                        <span class="feature-check">✔</span>
+                        <span class="feature-text">Tenha descontos exclusivos</span>
+                    </div>
+                    <div class="app-feature-item">
+                        <span class="feature-check">✔</span>
+                        <span class="feature-text">Receba notificações de lançamentos</span>
+                    </div>
+                </div>
+                <div class="app-download-buttons">
+                    <a href="https://www.apple.com/app-store/" class="app-store-button" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
+                            alt="App Store" class="store-logo">
+                        <span class="app-button-text">
+                            <div class="button-small-text">Disponível na</div>
+                            <div class="button-large-text">App Store</div>
+                        </span>
+                    </a>
+                    <a href="https://play.google.com/store" class="play-store-button" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732208.png" alt="Google Play"
+                            class="store-logo">
+                        <span class="app-button-text">
+                            <div class="button-small-text">Disponível no</div>
+                            <div class="button-large-text">Google Play</div>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clientes -->
+    <section class="cliente-section">
+        <div class="container">
+            <h2 class="section-title">Nossos clientes - MAIO 🍿🥤🥰</h2>
+            <div class="cliente-grid">
+                <!-- Cliente 1 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/01 clientes.webp" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Brusque - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Cliente 2 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/02 clientes.jpg" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Cliente 3 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/03 clientes.jpg" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Porto União - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Cliente 4 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/04 clientes.webp" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Brusque - Cine Shopping Gracher</h3>
+                    </div>
+                </div>
+                <!-- Cliente 5 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/05 clientes.webp" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Joaçaba - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Cliente 6 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Clientes/06 clientes.webp" alt="Cliente" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Porto Belo - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colaboradores -->
+    <section class="cliente-section">
+        <div class="container">
+            <h2 class="section-title">Nossos Colaboradores 🍿🥤😎</h2>
+            <div class="cliente-grid">
+                <!-- Colaborador 1 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/01 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Colaborador 2 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/02 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Colaborador 3 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/03 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Colabrador 4 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/04 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Colaborador 5 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/05 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+                <!-- Colaborador 6 -->
+                <div class="cliente-card">
+                    <div class="cliente-image">
+                        <img src="img/Colaborador/06 colaboradores.webp" alt="Cliente"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="cliente-details">
+                        <h3 class="cinema-name">Indaial - Cine Gracher Havan</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sobre Nós</h3>
+                    <p class="footer-description">A One Ticket é uma plataforma completa para compra de ingressos
+                        online.
+                        Eventos para todos os gostos em um só lugar.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/oneticketoficial" class="social-icon-footer">
+                            <img src="https://www.svgrepo.com/show/204937/facebook.svg" alt="Facebook" width="40"
+                                height="40">
+                        </a>
+                        <a href="https://x.com/onetick_et" class="social-icon-footer">
+                            <img src="https://www.svgrepo.com/show/125065/twitter-social-logotype.svg" alt="Twitter"
+                                width="40" height="50">
+                        </a>
+                        <a href="https://www.instagram.com/oneticketoficial/" class="social-icon-footer">
+                            <img src="https://www.svgrepo.com/show/131680/instagram.svg" alt="Instagram" width="45"
+                                height="45">
+                        </a>
+                    </div>
+
+                </div>
+                <div class="footer-column">
+                    <h3>Links Úteis</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Quem Somos</a></li>
+                        <li><a href="#">Perguntas Frequentes</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Pontos de Venda</a></li>
+                        <li><a href="#">Meia Entrada</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Minha Conta</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Esqueci minha senha</a></li>
+                        <li><a href="#">Preferencias de Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            Rua Germano Schaefer,215 , Sala 04
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            (47) 9 9121-7392
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            atendimento@oneticket.com.br
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; One Ticket - One Negócios de Internet LTDA ME - 18.548.037/0001-14 - Rua Prefeito Germano
+                Schaefer, 215 - Brusque, SC
+            </div>
+        </div>
+    </footer>
+
+    <!-- Acessibilidade -->
+    <div class="accessibility-bar">
+        <a href="#" class="accessibility-button" title="Libras">
+            <i class="fas fa-sign-language"></i>
+        </a>
+        <a href="#" class="accessibility-button" title="Leitor de voz">
+            <i class="fas fa-volume-up"></i>
+        </a>
+        <a href="#" class="accessibility-button" title="Acessibilidade visual">
+            <i class="fas fa-eye"></i>
+        </a>
+    </div>
+
+    <!-- CahtBot -->
+    <div class="chatbot-wrapper">
+        <div class="chatbot-popup">
+            <div class="chatbot-header">Atendimento Virtual</div>
+            <div class="chatbot-body">
+                <p>Olá! Como podemos te ajudar?</p>
+                <p><em>(Este é um modelo visual sem funcionalidade)</em></p>
+            </div>
+        </div>
+
+        <div class="chatbot-button" title="Fale com a gente">
+            <i class="fas fa-comments"></i>
+        </div>
+    </div>
